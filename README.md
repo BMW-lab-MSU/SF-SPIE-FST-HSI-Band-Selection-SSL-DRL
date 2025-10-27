@@ -68,14 +68,14 @@ SF-SPIE-FST-HSI-Band-Selection-SSL-DRL/
 ## ⚙️ Environment Setup
 
 ### 1️⃣ Clone the repository
-```bash
+bash
 git clone https://github.com/BMW-lab-MSU/SF-SPIE-FST-HSI-Band-Selection-SSL-DRL.git
-cd SF-SPIE-FST-HSI-Band-Selection-SSL-DRL ```
+cd SF-SPIE-FST-HSI-Band-Selection-SSL-DRL 
 
 2️⃣ Create environment
-conda create -n burnssl-drl python=3.10
+```conda create -n burnssl-drl python=3.10
 conda activate burnssl-drl
-pip install -r requirements.txt
+pip install -r requirements.txt```
 
 3️⃣ Core dependencies
 torch >= 2.0
