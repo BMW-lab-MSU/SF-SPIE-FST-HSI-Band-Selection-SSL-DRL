@@ -28,44 +28,40 @@ Developed under the **SMART FIRES NSF EPSCoR Project (OIA-2242802)** at **Montan
 
 ## Repository Structure
 
+```text
 SF-SPIE-FST-HSI-Band-Selection-SSL-DRL/
 │
-├── SSL/ # Self-Supervised Learning (SimCLR3DCNN)
-│ └── ssl/
-│ ├── SimCLR3DCNN.py
-│ ├── train_ssl.py
-│ ├── contrastive_loss.py
-│ └── dataset.py
+├── SSL/                                   # Self-Supervised Learning (SimCLR3DCNN)
+│   └── ssl/
+│       ├── SimCLR3DCNN.py
+│       ├── train_ssl.py
+│       ├── contrastive_loss.py
+│       └── dataset.py
 │
-├── drl_band_selection/ # Deep Reinforcement Learning (DRL) pipeline
-│ ├── agent_dqn.py
-│ ├── env_band_selection.py
-│ ├── agniNet.py
-│ ├── train_drl.py
-│ ├── trainBalancedClassifiers.py
-│ ├── trainUnbalancedClassifiers.py
-│ ├── extract_features.py
-│ ├── baseline_vs_smote_comparison.xlsx
-│ └── agni_best.pth
+├── drl_band_selection/                    # Deep Reinforcement Learning (DRL) pipeline
+│   ├── agent_dqn.py
+│   ├── env_band_selection.py
+│   ├── agniNet.py
+│   ├── train_drl.py
+│   ├── trainBalancedClassifiers.py
+│   ├── trainUnbalancedClassifiers.py
+│   ├── extract_features.py
+│   ├── baseline_vs_smote_comparison.xlsx
+│   └── agni_best.pth
 │
-├── Visuals/ # Figures, confusion matrices, CSVs
-│ ├── 3dcnn_drl_classification_results.xlsx
-│ ├── baseline_vs_smote_comparison.xlsx
-│ ├── conf_matrix_*.png
-│ ├── macro_f1_vs_topk_all_classifiers.png
-│ ├── Per_Class_F1_Trends_All_Classifiers.png
-│ └── before_balance_comparison.xlsx
+├── Visuals/                               # Figures, confusion matrices, and CSVs
+│   ├── 3dcnn_drl_classification_results.xlsx
+│   ├── baseline_vs_smote_comparison.xlsx
+│   ├── conf_matrix_*.png
+│   ├── macro_f1_vs_topk_all_classifiers.png
+│   ├── Per_Class_F1_Trends_All_Classifiers.png
+│   └── before_balance_comparison.xlsx
 │
-├── data/ # User-provided hyperspectral cube & ground truth
-├── outputs/ # Band scores, models, and metrics
-├── plots/ # Python plotting scripts (e.g., codeToFig3.py)
-├── scripts/ # Patch extraction, utilities
+├── data/                                  # User-provided hyperspectral cube & ground truth
+├── outputs/                               # Band scores, models, and metrics
+├── plots/                                 # Python plotting scripts (e.g., codeToFig3.py)
+├── scripts/                               # Patch extraction & utilities
 └── README.md
-
-yaml
-Copy code
-
----
 
 ## Environment Setup
 
