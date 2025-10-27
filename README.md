@@ -70,7 +70,7 @@ SF-SPIE-FST-HSI-Band-Selection-SSL-DRL/
 ### 1️⃣ Clone the repository
 ```bash
 git clone https://github.com/BMW-lab-MSU/SF-SPIE-FST-HSI-Band-Selection-SSL-DRL.git
-cd SF-SPIE-FST-HSI-Band-Selection-SSL-DRL
+cd SF-SPIE-FST-HSI-Band-Selection-SSL-DRL ```
 
 2️⃣ Create environment
 conda create -n burnssl-drl python=3.10
