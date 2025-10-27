@@ -63,19 +63,27 @@ SF-SPIE-FST-HSI-Band-Selection-SSL-DRL/
 ├── scripts/                               # Patch extraction & utilities
 └── README.md
 
+```
+
+---
+
 ## Environment Setup
 
-### 1️ Clone & create environment
+### 1. Clone and Create Environment
+
 ```bash
 git clone https://github.com/BMW-lab-MSU/SF-SPIE-FST-HSI-Band-Selection-SSL-DRL.git
 cd SF-SPIE-FST-HSI-Band-Selection-SSL-DRL
 
 conda create -n burnssl-drl python=3.10
 conda activate burnssl-drl
+
 pip install -r requirements.txt
-2️⃣ Dependencies
-nginx
-Copy code
+```
+
+### 2. Dependencies
+
+```
 torch >= 2.0
 torchvision
 numpy
@@ -85,117 +93,116 @@ matplotlib
 rasterio
 spectral
 opencv-python
-🚀 Usage
-Step 1 – Self-Supervised Pretraining
-bash
-Copy code
+```
+
+---
+
+## Usage
+
+### Step 1 — Self-Supervised Pretraining
+
+```bash
 cd SSL/ssl
 python train_ssl.py --epochs 100 --batch_size 32
-Step 2 – DRL Band Selection
-bash
-Copy code
+```
+
+---
+
+### Step 2 — DRL Band Selection
+
+```bash
 cd ../../drl_band_selection
 python train_drl.py --episodes 200 --reward spectral_redundancy
-Outputs:
+```
 
-bash
-Copy code
+**Outputs**
+```
 outputs/band_scores/drl_scores.npy
 Visuals/3dcnn_drl_classification_results.xlsx
-Step 3 – Train Classifiers
-bash
-Copy code
+```
+
+---
+
+### Step 3 — Train Classifiers
+
+```bash
 # Unbalanced
 python trainUnbalancedClassifiers.py --topk 30
+
 # Balanced (SMOTE + weighted loss)
 python trainBalancedClassifiers.py --topk 30
-Step 4 – Reproduce Figures (Fig 1–3)
-bash
-Copy code
+```
+
+---
+
+### Step 4 — Reproduce SPIE Figures (Fig 1–3)
+
+```bash
 cd ../plots
 python codeToFig3.py
-Figure	Description	Output
-Fig 1	Macro-F1 vs Top-K (All classifiers)	Visuals/macro_f1_vs_topk_all_classifiers.png
-Fig 2	Per-class F1 trends	Visuals/Per_Class_F1_Trends_All_Classifiers.png
-Fig 3	Confusion matrices	Visuals/conf_matrix_*
+```
 
-Example Results
-Classifier	Balancing	Top-K	Macro-F1	Weighted-F1
-KNN	No	30	0.68	0.70
-SVM	No	30	0.71	0.72
-RF	No	40	0.74	0.75
-3D-CNN	No	30	0.74	0.75
-3D-CNN	Yes (SMOTE)	30	0.80	0.82
+| Figure | Description | Output |
+|:-------|:-------------|:--------|
+| **Fig 1** | Macro-F1 vs Top-K (all classifiers) | `Visuals/macro_f1_vs_topk_all_classifiers.png` |
+| **Fig 2** | Per-class F1 trends | `Visuals/Per_Class_F1_Trends_All_Classifiers.png` |
+| **Fig 3** | Confusion matrices | `Visuals/conf_matrix_*.png` |
 
-Insight: Balancing improved Grass & Soil F1 scores, while Tree class performance remained stable—indicating consistent canopy detection.
+---
 
-Extended Study – SSEP vs SRPA vs DRL Comparison
-This section reproduces the comparative analysis between:
+##  Example Results
 
-SSEP (Spectral-Spatial Edge Preservation)
+| Classifier | Balancing | Top-K | Macro-F1 | Weighted-F1 |
+|:------------|:-----------|:------|:----------|:-------------|
+| KNN | No | 30 | 0.68 | 0.70 |
+| SVM | No | 30 | 0.71 | 0.72 |
+| RF | No | 40 | 0.74 | 0.75 |
+| 3D-CNN | No | 30 | 0.74 | 0.75 |
+| **3D-CNN** | **Yes (SMOTE)** | **30** | **0.80** | **0.82** |
 
-SRPA (Spectral-Redundancy Penalized Attention)
+> **Observation:** SMOTE balancing enhanced *Grass* and *Soil* F1-scores, while *Tree* class remained stable—indicating robust canopy detection.
 
-DRL (BurnSSL-DRL agent)
+---
 
-Input Files
-bash
-Copy code
-outputs/band_scores/ssep_scores.npy
-outputs/band_scores/srpa_scores.npy
-outputs/band_scores/drl_scores.npy
-🧠 Run Comparative Training
-bash
-Copy code
-python scripts/compare_band_selection.py \
-    --methods SSEP SRPA DRL \
-    --topk_list 10 20 30 40 50 \
-    --models RF 3DCNN
-Generate Result Tables & Plots
-Outputs saved to:
+## Technical Summary
 
-bash
-Copy code
-outputs/comparison_results/comparison_results.csv
-Visuals/SSEP_SRPA_DRL_comparison.png
-Method	Classifier	Top-K	Accuracy	Macro-F1
-SSEP	RF	30	0.72	0.71
-SRPA	RF	30	0.74	0.73
-DRL (BurnSSL-DRL)	3D-CNN	30	0.81	0.80
+| Component | Description |
+|:-----------|:-------------|
+| **SSL** | SimCLR 3D-CNN encoder learns spectral–spatial embeddings from unlabeled patches. |
+| **DRL** | DQN agent optimizes band selection using reward = classification gain – redundancy. |
+| **Classifier** | Random Forest + 3D-CNN evaluate selected bands. |
+| **Metrics** | Macro-F1, Weighted-F1, Per-class F1, Confusion Matrix. |
+| **Balancing** | SMOTE resampling + class-weighted loss for imbalanced data. |
 
-Observation: DRL outperformed both SSEP and SRPA by effectively emphasizing low-wavelength VNIR regions related to chlorophyll degradation and soil exposure.
+---
 
-🧠 Technical Summary
-Component	Description
-SSL	SimCLR 3D-CNN encoder learns spectral–spatial embeddings.
-DRL	DQN agent selects spectral bands optimizing reward = accuracy – redundancy.
-Classifier	Random Forest + 3D-CNN used for downstream evaluation.
-Metrics	Macro-F1, Weighted-F1, Per-class F1, Confusion Matrix.
-Balancing	SMOTE resampling + class-weighted loss.
+## Citation
 
-🧾 Citation
-bibtex
-Copy code
+```bibtex
 @inproceedings{karankot2025burnssldrl,
   title={BurnSSL-DRL: Self-Supervised and Reinforcement-Driven Band Selection for UAV-Based Post-Fire Vegetation Analysis},
   author={Mahmad Isaq Karankot and Bradley Whitaker and others},
   booktitle={IEEE International Workshop on Machine Learning for Signal Processing (MLSP)},
   year={2025}
 }
-🙏 Acknowledgments
-This work was supported by the NSF EPSCoR SMART FIRES Project (OIA-2242802)
-at Montana State University, within the BMW Lab (Burns, Machine Learning, and Wildfire).
-We acknowledge the UAV and field teams at Lubrecht Experimental Forest for data collection and the fire-science collaborators for their assistance.
-
-📬 Contact
-Author: Mahmad Isaq Karankot
-Year: 2025
-
-yaml
-Copy code
+```
 
 ---
 
+## Acknowledgments
 
+This research was conducted at **Montana State University** within the  
+**NSF EPSCoR SMART FIRES Project (OIA-2242802)** under the  
+**BMW Lab (Burns, Machine Learning & Wildfire)**.  
 
+We acknowledge UAV and field teams at **Lubrecht Experimental Forest** and the collaborating fire-science groups for data support.
 
+---
+
+## Contact
+
+**Author:** Mahmad Isaq Karankot  
+**Email:** mahmad.isaq@outlook.com  
+**Institution:** Montana State University  
+**Lab:** BMW Lab – Burns, Machine Learning & Wildfire  
+**Year:** 2025
