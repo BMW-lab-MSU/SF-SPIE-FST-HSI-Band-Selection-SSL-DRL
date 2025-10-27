@@ -1,0 +1,29 @@
+import numpy as np
+from PIL import Image
+
+# Paths
+mask_path = "/home/n51x164/SPIE-2025/BurnSSL-DRL/data/segmentation_mask.png"
+patch_stride = 25
+patch_size = 50
+
+# Load mask image
+mask = np.array(Image.open(mask_path))
+H, W = mask.shape
+
+patch_labels = []
+
+for i in range(0, H - patch_size + 1, patch_stride):
+    for j in range(0, W - patch_size + 1, patch_stride):
+        patch_mask = mask[i:i+patch_size, j:j+patch_size]
+        # Count frequency of each class in the patch
+        unique, counts = np.unique(patch_mask, return_counts=True)
+        class_counts = dict(zip(unique, counts))
+        # Assign majority class
+        majority_class = max(class_counts, key=class_counts.get)
+        patch_labels.append(majority_class)
+
+# Convert to NumPy array and save
+patch_labels = np.array(patch_labels)
+np.save("/home/n51x164/SPIE-2025/BurnSSL-DRL/patches1/patch_labels.npy", patch_labels)
+
+print("✅ Saved patch_labels.npy with", len(patch_labels), "labels.")
