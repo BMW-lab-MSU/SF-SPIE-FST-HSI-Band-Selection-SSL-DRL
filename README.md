@@ -2,9 +2,9 @@
 
 ### Self-Supervised and Reinforcement-Driven Band Selection for UAV-Based Post-Fire Vegetation Analysis
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+<!-- [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)]()
-[![Paper](https://img.shields.io/badge/Paper-SPIE%202025%20(MLSP)-green.svg)]()
+[![Paper](https://img.shields.io/badge/Paper-SPIE%202025%20(MLSP)-green.svg)]() -->
 
 ---
 
@@ -180,9 +180,9 @@ python codeToFig3.py
 
 ```bibtex
 @inproceedings{karankot2025burnssldrl,
-  title={BurnSSL-DRL: Self-Supervised and Reinforcement-Driven Band Selection for UAV-Based Post-Fire Vegetation Analysis},
-  author={Mahmad Isaq Karankot and Bradley Whitaker and others},
-  booktitle={IEEE International Workshop on Machine Learning for Signal Processing (MLSP)},
+  title={Hyperspectral band selection via self-supervised and reinforcement learning for prescribed burn impact analysis},
+  author={Mahmad Isaq Karankot, Ethan M. Glenn and Bradley Whitaker},
+  booktitle={SPIE Future Sensing Technologies},
   year={2025}
 }
 ```
